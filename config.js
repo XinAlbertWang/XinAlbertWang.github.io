@@ -4,7 +4,7 @@ const USER_CONFIG = {
   role:       "PhD Candidate",
   university: "Western University",
   email:      "xwan2552@uwo.ca",
-  bio:        "I'm Xin Wang, a sixth-year economics PhD student at Western University. I completed my undergraduate at Sun Yat-sen University studying Economics and Mathematics. My CV can be found here. I am interested in game theory, mechanism design, and behavioral economics.",
+  bio:        "Hello! I'm Xin Wang, a Ph.D. candidate in the Department of Economics at Western University. I completed my undergraduate at Sun Yat-sen University, studying Economics and Mathematics. I'm a micro theorist working in game theory, mechanism design, and information design. My current research uses the optimal transportation method to study multidimensional information design and mechanism design problems. \\"
   photo:      "",
 
   stats: [
