@@ -1,145 +1,102 @@
-// Theme Toggle
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
-
-const savedTheme = localStorage.getItem('theme') || 'light';
+let savedTheme = 'light';
+try { savedTheme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'; } catch (_) { /* Storage is optional. */ }
 html.setAttribute('data-theme', savedTheme);
 
 function updateThemeLabel() {
-    const label = document.querySelector('.theme-label');
-    if (label) label.textContent = html.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark';
+    const next = html.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark';
+    const label = themeToggle?.querySelector('.theme-label');
+    if (label) label.textContent = next;
+    themeToggle?.setAttribute('aria-label', `Switch to ${next.toLowerCase()} theme`);
 }
 updateThemeLabel();
-
-themeToggle.addEventListener('click', () => {
+themeToggle?.addEventListener('click', () => {
     const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    try { localStorage.setItem('theme', next); } catch (_) { /* Theme switching does not require storage. */ }
     updateThemeLabel();
 });
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
+// Use element IDs so empty hashes never produce an invalid CSS selector.
+document.addEventListener('click', event => {
+    const anchor = event.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    const target = document.getElementById(anchor.getAttribute('href').slice(1));
+    if (!target) return;
+    event.preventDefault();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth' });
+    history.replaceState(null, '', anchor.getAttribute('href'));
 });
 
-// Prevent href="#"
-document.querySelectorAll('a[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
-
-// Populate config
-document.addEventListener('DOMContentLoaded', () => {
-    if (typeof USER_CONFIG === 'undefined') return;
-    populateSimpleFields(USER_CONFIG);
-    populateLists(USER_CONFIG);
-});
-
-function populateSimpleFields(cfg) {
-    document.querySelectorAll('[data-config]').forEach(el => {
-        const key = el.dataset.config;
-        if (key === 'role_university') el.textContent = `${cfg.role} at ${cfg.university}`;
-        else if (cfg[key] !== undefined) el.textContent = cfg[key];
-    });
-
-    if (cfg.photo) {
-        const av = document.querySelector('.image-placeholder');
-        if (av) av.innerHTML = `<img src="${cfg.photo}" alt="${cfg.name}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`;
-    }
+function escapeHTML(value = '') {
+    return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 }
-
-function boldName(authors, name) {
-    return authors.replace(name, `<strong>${name}</strong>`);
-}
-
 function renderPubList(list, cfg) {
-    return list.map(p => `
-        <article class="pub-card" data-year="${p.year || ''}">
-            ${p.year ? `<div class="pub-year">${p.year}</div>` : ''}
-            <div class="pub-content">
-                <div class="pub-header">
-                    <h3 class="pub-title">${p.title}</h3>
-                    <div class="pub-links">
-                        ${(Object.entries(p.links || {})
-                            .map(([k, v]) => `<a href="${v}" class="pub-link">${k.toUpperCase()}</a>`)
-                            .join(''))}
-                    </div>
-                </div>
-                <p class="pub-authors">${boldName(p.authors, cfg.name)}</p>
-                <p class="pub-venue">${p.venue}</p>
-                ${p.abstract ? `<p class="pub-abstract">${p.abstract}</p>` : ''}
+    return list.map(paper => `<article class="pub-card">
+        <div class="pub-content">
+            <div class="pub-header">
+                <h3 class="pub-title">${escapeHTML(paper.title)}</h3>
+                <div class="pub-links">${Object.entries(paper.links || {}).map(([label, url]) => `<a href="${escapeHTML(url)}" class="pub-link" aria-label="${escapeHTML(label)}: ${escapeHTML(paper.title)}">${escapeHTML(label)}</a>`).join('')}</div>
             </div>
-        </article>
-    `).join('');
+            <p class="pub-authors">${paper.authors === cfg.name ? `<strong>${escapeHTML(paper.authors)}</strong>` : escapeHTML(paper.authors)}</p>
+            <p class="pub-venue">${escapeHTML(paper.venue)}</p>
+            ${paper.abstract ? `<p class="pub-abstract">${escapeHTML(paper.abstract)}</p>` : ''}
+        </div>
+    </article>`).join('');
 }
-
-function populateLists(cfg) {
-    const sections = [
-        ["cfg-jmp", cfg.jmp],
-        ["cfg-working-papers", cfg.working_papers],
-        ["cfg-wip", cfg.wip],
-        ["cfg-publications", cfg.publications]
-    ];
-
-    sections.forEach(([id, data]) => {
-        const el = document.getElementById(id);
-        if (el && data?.length) el.innerHTML = renderPubList(data, cfg);
+function renderExperienceItem(item) {
+    return `<div class="exp-item">
+        <div class="exp-period">${escapeHTML(item.period)}</div>
+        <h3 class="exp-title">${escapeHTML(item.title)}</h3>
+        ${item.institution ? `<p class="exp-org">${escapeHTML(item.institution)}</p>` : ''}
+        ${item.details ? `<p class="exp-desc">${escapeHTML(item.details)}</p>` : ''}
+    </div>`;
+}
+function renderReference(person) {
+    return `<article class="reference-card">
+        <p class="reference-role">${escapeHTML(person.role || 'Reference')}</p>
+        <h3 class="exp-title">${escapeHTML(person.name)}</h3>
+        <p class="exp-org">Department of Economics<br>University of Western Ontario</p>
+        <p><a href="mailto:${escapeHTML(person.email)}">${escapeHTML(person.email)}</a></p>
+        <p><a href="${escapeHTML(person.phone_href)}">${escapeHTML(person.phone)}</a></p>
+    </article>`;
+}
+function populateHomepage(cfg) {
+    document.querySelectorAll('[data-config]').forEach(element => {
+        const key = element.dataset.config;
+        if (key === 'role_university') element.textContent = `${cfg.role} at ${cfg.university}`;
+        else if (cfg[key] !== undefined) element.textContent = cfg[key];
     });
-
-    const projGrid = document.getElementById('cfg-projects');
-    if (projGrid && cfg.projects?.length) {
-        projGrid.innerHTML = cfg.projects.map(p => `
-            <article class="project-card">
-                <h3 class="project-title">${p.name}</h3>
-                <p class="project-desc">${p.desc}</p>
-                <div class="project-tags">${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
-            </article>
-        `).join('');
-    }
-
-    const newsList = document.getElementById('cfg-news');
-    if (newsList && cfg.news?.length) {
-        newsList.innerHTML = cfg.news.map(n => `
-            <div class="news-item">
-                <span class="news-date">${n.date}</span>
-                <div class="news-content">
-                    <span class="news-badge">${n.badge}</span>
-                    <span class="news-text">${n.text}</span>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    const expGrid = document.getElementById('cfg-experience');
-    if (expGrid) {
-        const edu = cfg.education || [];
-        const exp = cfg.experience || [];
-        let html = "";
-
-        if (edu.length) {
-            html += `<div class="exp-category"><h3>Education</h3>${
-                edu.map(e => `
-                    <div class="exp-item">
-                        <div class="exp-period">${e.period}</div>
-                        <div class="exp-details"><h4>${e.degree}</h4><p>${e.institution}</p></div>
-                    </div>
-                `).join('')
-            }</div>`;
-        }
-
-        if (exp.length) {
-            html += `<div class="exp-category"><h3>Experience</h3>${
-                exp.map(e => `
-                    <div class="exp-item">
-                        <div class="exp-period">${e.period}</div>
-                        <div class="exp-details"><h4>${e.role}</h4><p>${e.institution}</p></div>
-                    </div>
-                `).join('')
-            }</div>`;
-        }
-
-        expGrid.innerHTML = html;
-    }
+    document.querySelectorAll('[data-link]').forEach(element => {
+        const key = element.dataset.link;
+        const url = key === 'email' ? `mailto:${cfg.email}` : key === 'phone' ? cfg.phone_href : cfg.links[key];
+        if (url) element.setAttribute('href', url);
+    });
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    document.getElementById('cfg-interests').textContent = cfg.research_interests.join(', ');
+    [['cfg-jmp', cfg.jmp], ['cfg-working-papers', cfg.working_papers], ['cfg-wip', cfg.wip]].forEach(([id, papers]) => {
+        document.getElementById(id).innerHTML = renderPubList(papers, cfg);
+    });
+    document.getElementById('cfg-education').innerHTML = cfg.education.map(renderExperienceItem).join('');
+    document.getElementById('cfg-experience').innerHTML = `
+        <div><h3 class="exp-category">Teaching Assistant</h3><p class="section-intro">University of Western Ontario</p>
+            ${cfg.teaching.map(renderExperienceItem).join('')}
+        </div>
+        <div><h3 class="exp-category">Research Assistant</h3><p class="section-intro">University of Western Ontario</p>
+            ${cfg.research_assistance.map(renderExperienceItem).join('')}
+        </div>`;
+    document.getElementById('cfg-presentations').innerHTML = cfg.presentations.map(item => `<div class="news-item presentation-item">
+        <span class="news-date">${escapeHTML(item.date)}</span>
+        <div><h3 class="pub-title">${escapeHTML(item.conference)}</h3><p class="exp-org">${escapeHTML(item.location)}${item.status ? ` <span class="news-badge">${escapeHTML(item.status)}</span>` : ''}</p></div>
+    </div>`).join('');
+    document.getElementById('cfg-additional').innerHTML = `
+        <div><h3 class="exp-category">Scholarships</h3>${cfg.scholarships.map(renderExperienceItem).join('')}</div>
+        <div><h3 class="exp-category">Skills</h3>
+            <div class="exp-item"><h4 class="exp-title">Programming</h4><p class="exp-org">${escapeHTML(cfg.skills.programming.join(', '))}</p></div>
+            <div class="exp-item"><h4 class="exp-title">Languages</h4><p class="exp-org">${escapeHTML(cfg.skills.languages.join(', '))}</p></div>
+        </div>`;
+    document.getElementById('cfg-references').innerHTML = cfg.references.map(renderReference).join('') + renderReference(cfg.placement_director);
 }
+if (typeof USER_CONFIG !== 'undefined') populateHomepage(USER_CONFIG);

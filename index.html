@@ -3,130 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-config="name">Academic Homepage</title>
+    <meta name="description" content="Xin Wang is a Ph.D. candidate in Economics at Western University, studying microeconomics, information design, and mechanism design.">
+    <title>Xin Wang | Economics</title>
     <link rel="stylesheet" href="style.css">
+    <script src="config.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
-
 <body>
     <a href="#about" class="skip-link">Skip to main content</a>
-
-    <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <span class="logo-bracket">[</span>
-                <span class="logo-text" data-config="initials">YN</span>
-                <span class="logo-bracket">]</span>
+            <a href="#about" class="nav-logo" aria-label="Xin Wang, home">
+                <span class="logo-bracket">[</span><span class="logo-text" data-config="initials">XW</span><span class="logo-bracket">]</span>
             </a>
-
             <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#jmp">JMP</a>
-                <a href="#working-papers">Working Papers</a>
-                <a href="#wip">Work in Progress</a>
-                <a href="#publications">Publications</a>
-                <a href="#projects">Projects</a>
-                <a href="#news">News</a>
+                <a href="#jmp">Research</a>
+                <a href="#education">Education</a>
                 <a href="#experience">Experience</a>
+                <a href="#presentations">Presentations</a>
+                <a href="#references">References</a>
                 <a href="#contact">Contact</a>
+                <a href="CV.pdf" data-link="cv">CV</a>
             </div>
-
             <div class="nav-controls">
-                <button id="themeToggle" class="nav-btn">
-                    <span class="theme-label"></span>
+                <button id="themeToggle" class="nav-btn" type="button" aria-label="Switch to dark theme">
+                    <span class="theme-label">Dark</span>
                 </button>
             </div>
         </div>
     </nav>
-
-    <!-- Hero -->
-    <section id="about" class="hero">
-        <div class="hero-content">
-            <div>
-                <h1 class="hero-name" data-config="name">Your Name</h1>
-                <p class="hero-title" data-config="role_university"></p>
-                <p class="hero-description" data-config="bio"></p>
-            </div>
-
-            <div class="hero-image">
-                <div class="image-frame">
-                    <div class="image-placeholder"></div>
+    <main>
+        <section id="about" class="hero">
+            <div class="hero-content">
+                <div>
+                    <h1 class="hero-name" data-config="name">Xin Wang</h1>
+                    <p class="hero-title" data-config="role_university">Ph.D. Candidate in Economics at Western University</p>
+                    <p class="hero-description" data-config="bio"></p>
+                    <p class="research-fields"><strong>Research interests:</strong> <span id="cfg-interests">Microeconomics, Information Design, Mechanism Design</span></p>
+                    <div class="hero-cta">
+                        <a class="btn btn-primary" href="CV.pdf" data-link="cv">Curriculum Vitae (PDF)</a>
+                        <a class="btn btn-secondary" href="mailto:xwan2552@uwo.ca" data-link="email">Email</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Job Market Paper -->
-    <section id="jmp" class="section">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> Job Market Paper</h2>
-            <div class="publications-list" id="cfg-jmp"></div>
-        </div>
-    </section>
-
-    <!-- Working Papers -->
-    <section id="working-papers" class="section section-alt">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> Working Papers</h2>
-            <div class="publications-list" id="cfg-working-papers"></div>
-        </div>
-    </section>
-
-    <!-- Work in Progress -->
-    <section id="wip" class="section">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> Work in Progress</h2>
-            <div class="publications-list" id="cfg-wip"></div>
-        </div>
-    </section>
-
-    <!-- Publications -->
-    <section id="publications" class="section">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> Publications</h2>
-            <div class="publications-list" id="cfg-publications"></div>
-        </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="section section-alt">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> Projects</h2>
-            <div class="projects-grid" id="cfg-projects"></div>
-        </div>
-    </section>
-
-    <!-- News -->
-    <section id="news" class="section">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> News</h2>
-            <div class="news-list" id="cfg-news"></div>
-        </div>
-    </section>
-
-    <!-- Experience -->
-    <section id="experience" class="section section-alt">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> Experience</h2>
-            <div class="experience-grid" id="cfg-experience"></div>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="section">
-        <div class="section-container">
-            <h2 class="section-title"><span class="title-icon">//</span> Contact</h2>
-            <p>Email: <span data-config="email"></span></p>
-        </div>
-    </section>
-
+        </section>
+        <section id="jmp" class="section">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Job Market Paper</h2>
+                <div class="publications-list" id="cfg-jmp"></div>
+            </div>
+        </section>
+        <section id="working-papers" class="section section-alt">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Working Papers</h2>
+                <div class="publications-list" id="cfg-working-papers"></div>
+            </div>
+        </section>
+        <section id="wip" class="section">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Work in Progress</h2>
+                <div class="publications-list" id="cfg-wip"></div>
+            </div>
+        </section>
+        <section id="education" class="section section-alt">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Education</h2>
+                <div class="education-list" id="cfg-education"></div>
+            </div>
+        </section>
+        <section id="experience" class="section">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Research &amp; Teaching Experience</h2>
+                <div class="experience-grid" id="cfg-experience"></div>
+            </div>
+        </section>
+        <section id="presentations" class="section section-alt">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Academic Presentations</h2>
+                <p class="section-intro">Convex Order and Moment Persuasion</p>
+                <div class="presentations-list" id="cfg-presentations"></div>
+            </div>
+        </section>
+        <section id="additional" class="section">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Scholarships &amp; Skills</h2>
+                <div class="experience-grid" id="cfg-additional"></div>
+            </div>
+        </section>
+        <section id="references" class="section section-alt">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> References &amp; Placement</h2>
+                <div class="references-grid" id="cfg-references"></div>
+            </div>
+        </section>
+        <section id="contact" class="section">
+            <div class="section-container">
+                <h2 class="section-title"><span class="title-icon" aria-hidden="true">//</span> Contact</h2>
+                <address class="contact-address" data-config="address"></address>
+                <p>Email: <a href="mailto:xwan2552@uwo.ca" data-link="email" data-config="email">xwan2552@uwo.ca</a></p>
+                <p>Mobile: <a href="tel:+15488810409" data-link="phone" data-config="phone">(+1) 548-881-0409</a></p>
+                <p>Website: <a href="https://xinalbertwang.github.io/" data-link="website">xinalbertwang.github.io</a></p>
+            </div>
+        </section>
+    </main>
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; 2025 <span data-config="name"></span></p>
+            <p>&copy; <span id="current-year">2026</span> <span data-config="name">Xin Wang</span></p>
         </div>
     </footer>
-
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+    <noscript><p class="section-container noscript-note">Please enable JavaScript to view the full research and experience listings. You can also <a href="CV.pdf">read the complete CV</a>.</p></noscript>
 </body>
 </html>
