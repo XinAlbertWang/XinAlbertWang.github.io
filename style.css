@@ -1084,7 +1084,7 @@ a:hover {
 .nav-links a { white-space: nowrap; }
 .hero-content { grid-template-columns: 240px minmax(0, 1fr); gap: var(--space-3xl); }
 .hero-portrait { display: block; width: 240px; max-width: 100%; height: auto; border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
-.hero-description { max-width: 780px; }
+.hero-description { max-width: 780px; text-align: justify; hyphens: auto; }
 .research-fields { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-lg); }
 .hero-cta { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 .pub-card { grid-template-columns: 1fr; }
