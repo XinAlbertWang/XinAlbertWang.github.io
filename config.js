@@ -8,7 +8,7 @@ const USER_CONFIG = {
   "phone": "(+1) 548-881-0409",
   "phone_href": "tel:+15488810409",
   "address": "Department of Economics, Faculty of Social Science\nUniversity of Western Ontario\nLondon, Ontario, Canada, N6A 5C2",
-  "bio": "Hello! I'm Xin Wang, a Ph.D. candidate in the Department of Economics at Western University, with graduation expected in 2027. I studied Economics and Mathematics at Sun Yat-sen University. I'm a micro theorist working in game theory, mechanism design, and information design. My current research uses optimal transport methods to study multidimensional information design and mechanism design problems.",
+  "bio": "Hello! I'm Xin Wang, a Ph.D. candidate in the Department of Economics at Western University, with graduation expected in 2027. I will be on the 2026–2027 academic job market. I studied Economics and Mathematics at Sun Yat-sen University. I'm a micro theorist working in game theory, mechanism design, and information design. My current research uses optimal transport methods to study multidimensional information design and mechanism design problems.",
   "research_interests": [
     "Microeconomics",
     "Information Design",
@@ -36,7 +36,9 @@ const USER_CONFIG = {
       "authors": "Xin Wang",
       "venue": "Working Paper",
       "abstract": "We study dual attainment in Bayesian persuasion, where the sender maximizes the expected payoff over distributions of posterior beliefs with a bounded, upper semicontinuous objective. Economically, the dual problem minimizes the price of an acquisition offer for a multiproduct firm and its rights to disclose information to consumers, subject to covering the firm's immediate payoff and preventing profitable information disclosure prior to acquisition. We show that the dual optimum, namely the minimum-price function, is attained within the class of bounded, upper semicontinuous concave majorants. This strong duality result does not imply attainment by state-dependent prices; that is, the acquisition offer must be a price for the common belief over states rather than the expected value of state-dependent prices. A counterexample shows that state-dependent prices may fail to attain the value even when the primal objective is bounded and concave. For finite-dimensional moment persuasion, we prove a stronger pricing result: every finite-valued, upper semicontinuous objective admits an optimal integrable Borel convex majorant. For continuous objectives, the majorant can be chosen to be lower semicontinuous. We then characterize weakly exposed mean-preserving contractions through a tight convex majorant together with uniqueness on its contact support. Under an absolutely continuous prior, this criterion decomposes into conditional uniqueness problems on the relative interiors of the majorant's affine faces. The resulting cells are distinct from the canonical martingale irreducible components.",
-      "links": {}
+      "links": {
+        "Available upon request": "mailto:xwan2552@uwo.ca?subject=Request%20for%20Strong%20Duality%20in%20Bayesian%20Persuasion%20Revisited"
+      }
     }
   ],
   "wip": [
