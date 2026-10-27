@@ -25,7 +25,7 @@ const USER_CONFIG = {
       "venue": "Job Market Paper",
       "abstract": "Moment persuasion reduces the choice of an information policy to an optimization over distributions of posterior means dominated by the prior in convex order. We study the extreme points of this feasible set using the irreducible-component structure of martingale transport. When the prior assigns zero mass to the union of the relative boundaries of the non-singleton components, the two measures admit conditional convex-order decompositions with a common distribution over components. Extremality is then equivalent to affine independence of the conditional posterior-mean support in almost every component. Without boundary negligibility, local affine independence remains necessary but is not sufficient. The analysis includes singleton components, lower-dimensional pools, and uncountably many components. We also establish an implementation result and give a two-dimensional persuasion example whose unique optimal distribution of posterior means is nonatomic, although each pooling component contains only one posterior mean.",
       "links": {
-        "PDF": "papers/convex-order-and-moment-persuasion.pdf?v=20261012",
+        "PDF": "papers/convex-order-and-moment-persuasion.pdf?v=20261025",
         "arXiv": "https://arxiv.org/abs/2609.13696"
       }
     }
